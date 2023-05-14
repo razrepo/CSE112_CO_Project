@@ -222,3 +222,37 @@ def pass1():
     # storing var address 
 
     instruction_location = 0 
+
+def buildBinary(operands):
+	
+	instruction_type = opcode_table[operands[0]][1]
+	binary_instruction = ""
+	if instruction_type == "F":
+		binary_instruction = opcode_table[operands[0]][0] + 11*"0"
+		return binary_instruction
+	# opcode
+	binary_instruction = binary_instruction + opcode_table[operands[0]][0]
+
+	# unused bits
+	binary_instruction = binary_instruction + type_table[instruction_type][1]*"0"
+
+	#operands
+	i=0
+	while(i<type_table[instruction_type][0]):
+		j = i + 2
+		checkvar=type_table[instruction_type][j]
+		if checkvar == "reg":
+			binary_instruction = binary_instruction + registers[operands[1+i]]
+		elif checkvar == "imm":
+			immediate = int(operands[i+1][1:])
+			immediate = bin(immediate)[2:]
+			lenimm=len(immediate)
+			if lenimm < 8:
+				no_of_zeroes = 8 - lenimm
+				immediate = no_of_zeroes*"0" + immediate
+			binary_instruction = binary_instruction + immediate
+		else:
+			binary_instruction = binary_instruction + address_table[operands[i+1]][0]
+		i+=1
+
+	return binary_instruction
