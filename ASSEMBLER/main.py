@@ -330,3 +330,45 @@ def buildBinary(operands):
 		i+=1
 
 	return binary_instruction
+
+
+def check(instruction):
+    global output_error
+    global errorflag
+    global output
+    instruction_type = opcode_table[instruction[0]][1]
+
+    if len(instruction[1:]) != type_table[instruction_type][0]:
+        fr=f"Wrong instruction syntax on line: {instruction_location}"
+        output=fr+'\n'
+        errorflag=False
+    i=0
+    while(i<type_table[instruction_type][0]):
+        j = i + 2
+        checkvar=type_table[instruction_type][j]
+        if checkvar == "reg":
+            if not validRegister(instruction[i+1], False):
+                fr=f"Invalid register name on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+                EXIT()
+        elif checkvar == "imm":
+            if not validImmediate(instruction[i+1]):
+                fr=f"Invalid immediate on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+                EXIT()
+        elif checkvar == "mem_addr_var":
+            if not validMemoryAddress(instruction[i+1], True):
+                fr=f"Invalid variable address on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+                EXIT()
+        else: # label adrress
+            if not validMemoryAddress(instruction[i+1], False):
+                fr=f"Invalid label address on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+                EXIT()
+        i+=1
+	
