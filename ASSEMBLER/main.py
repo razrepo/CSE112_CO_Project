@@ -376,4 +376,66 @@ def check(instruction):
                 errorflag=False
                 EXIT()
         i+=1
-	
+# handles opcode validation for each instruction and 
+# calls the relevant check fn for each type of instruction
+
+def pass2():
+    global errorflag
+    global output_error
+    global output
+    global instruction_location
+    global bin_program
+
+    instruction_location = 0
+
+    for i,line in enumerate(program):
+        instruction_location = instruction_location + 1
+        operands = line.split()
+        lenop=len(operands)
+        if lenop == 0:
+            continue
+        checkop=operands[0]
+        if checkop == "var":
+            continue
+
+        if checkop[-1] == ":":
+            checkop1=operands[1]
+            if checkop1 in opcode_table:
+                if checkop1 != "mov":
+                    check(operands[1:])
+                    bin_program.append(buildBinary(operands[1:]))
+                else: # mov instruction
+                    checkMov(operands[1:])
+                    bin_program.append(buildMovBinary(operands[1:]))
+            else:
+                fr=f"Invalid instruction name on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+        else:
+            checkop=operands[0]
+            if checkop in opcode_table:
+                if checkop != "mov":
+                    check(operands)
+                    bin_program.append(buildBinary(operands))
+                else: # mov instruction
+                    checkMov(operands)
+                    bin_program.append(buildMovBinary(operands))
+            else:
+                fr=f"Invalid instruction name on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+
+
+f=open('test1.txt')
+file=f.readlines()
+for line in file:
+    if line!='' and line!='\n' :
+        line.rstrip('\n')
+        program.append(line)
+pass1()
+pass2()
+for line in bin_program:
+    output_error+=line+'\n'
+f=open('output.txt','w')
+f.write(output_error)
+f.close()
