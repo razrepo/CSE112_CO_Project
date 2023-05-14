@@ -43,3 +43,35 @@ address_table = {} # address of vars and labels. {name: (address, isVariable)}
 output=''
 output_error=''
 errorflag=True
+
+
+def EXIT():
+    f=open('error.txt','w')
+    f.write(output)
+    f.close()
+    exit()
+
+
+
+# checks if immediate is a valid immediate
+def validImmediate(immediate):
+	flag=True
+	if len(immediate) == 0:
+		flag=False
+	elif immediate[0] != "$":
+		flag=False
+	elif not immediate[1:].isdecimal():
+		flag=False
+	elif int(immediate[1:]) > 255 or int(immediate[1:]) < 0:
+		flag=False
+	return flag
+
+
+		
+# checks if it is a valid laber or var address
+def validMemoryAddress(memory_address, isVariable):
+	flag=False
+	if memory_address in address_table:
+		if isVariable == address_table[memory_address][1]:
+			flag=True
+	return flag
