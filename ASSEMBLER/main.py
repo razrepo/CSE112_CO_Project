@@ -75,3 +75,28 @@ def validMemoryAddress(memory_address, isVariable):
 		if isVariable == address_table[memory_address][1]:
 			flag=True
 	return flag
+
+
+
+def validRegister(name, canBeFlags):
+	if name in registers:
+		if name == "FLAGS":
+			if not canBeFlags: 
+				return False
+			else:
+				return True
+		return True
+	return False
+
+
+# converts decimal address val to 8 bit adress string
+def memoryLocation(int_address):
+	address = bin(int_address)
+	address=address[2:]
+	leng=len(address)
+	if leng < 8:
+		i = 8 - leng
+		address = i*"0" + address
+	return address
+
+
