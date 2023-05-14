@@ -17,10 +17,10 @@ opcode_table = {
     "not": ("01101", "C"),
     "cmp": ("01110", "C"),
     "jmp": ("01111", "E"),
-    "jlt": ("10000", "E"),
-    "jgt": ("10001", "E"),
-    "je": ("10010", "E"),
-    "hlt": ("10011", "F"),
+    "jlt": ("11100", "E"),
+    "jgt": ("11101", "E"),
+    "je": ("11111", "E"),
+    "hlt": ("11010", "F"),
 }
 
 # type name: (no. of operands, no. of unused bytes, type of operand1, type of operand2 ....)
