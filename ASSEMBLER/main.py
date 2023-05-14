@@ -32,3 +32,14 @@ type_table = {
 	"F": (0, 11)
 }
 registers = {"R0": "000", "R1": "001", "R2": "010", "R3": "011", "R4": "100", "R5": "101", "R6": "110", "FLAGS": "111"}
+# address: 0 based indexing, error generation: 1 based indexing
+
+program = [] # input assembly program
+bin_program = [] # output binary code
+# location_counter = 0  reset in every pass
+instruction_location = 0 # reset in every pass
+last_valid_instruction_count = 0
+address_table = {} # address of vars and labels. {name: (address, isVariable)}
+output=''
+output_error=''
+errorflag=True
