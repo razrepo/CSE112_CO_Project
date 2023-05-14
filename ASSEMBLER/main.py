@@ -122,3 +122,51 @@ def validLabelVar(name):
             errorflag=False
             EXIT()
     return True
+
+
+
+# assumes error free code 
+# finds address of vars and labels. Checks vars declaration location
+# handles hlt declarations
+def pass1():
+    global errorflag
+    global address_table
+    global instruction_location
+    global last_valid_instruction_count # used for handling hlt statements
+    global output
+    global output_error
+    instruction_location = 0
+    isValidVar = True
+    noOfInstructions = 0
+
+    for i,line in enumerate(program):
+        instruction_location = instruction_location + 1
+        operands = line.split()
+        if len(operands) == 0 :
+            continue
+        last_valid_instruction_count = instruction_location
+        if operands[0] == "var":
+            if len(operands) != 2:
+                fr=f"Invalid declaration syntax of var on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag+False
+                EXIT()
+            if isValidVar==False:
+                fr=f"Invalid declaration of var on line: {instruction_location}"
+                output=fr+'\n'
+                errorflag+False
+                EXIT()
+        else: 
+            isValidVar = False
+            # label check
+            leng=len(operands)
+            if(operands[0][-1] == ":"):
+                if leng == 1:
+                    fr=f"No instruction after label declaration on line: {instruction_location}"
+                    output=fr+'\n'
+                    errorflag=False
+                    EXIT()
+                # DONE: check for valid label name 
+                if validLabelVar(operands[0][0:-1])==True:
+                    address_table[operands[0][0:-1]] = (memoryLocation(noOfInstructions), False)
+            noOfInstructions = noOfInstructions + 1
