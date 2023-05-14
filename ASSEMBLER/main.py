@@ -268,6 +268,33 @@ def checkMov(instruction):
         EXIT()
 
 	
+
+	
+def buildMovBinary(operands):
+	binary_instruction = ""
+
+	# unused bits and opcode 
+	if validRegister(operands[2], True)==True:
+		binary_instruction = binary_instruction + opcode_table["mov"][1][0]
+		binary_instruction = binary_instruction + 5*"0"
+	else:
+		binary_instruction = binary_instruction + opcode_table["mov"][0][0]
+	
+	# 1st register
+	binary_instruction = binary_instruction + registers[operands[1]]
+
+	if validRegister(operands[2], True)==True:
+		binary_instruction = binary_instruction + registers[operands[2]]
+	else:
+		immediate = int(operands[2][1:])
+		immediate = bin(immediate)[2:]
+		lenimm=len(immediate)
+		if lenimm < 8:
+			no_of_zeroes = 8 - lenimm
+			immediate = no_of_zeroes*"0" + immediate
+		binary_instruction = binary_instruction + immediate
+	
+	return binary_instruction
 	
 
 def buildBinary(operands):
