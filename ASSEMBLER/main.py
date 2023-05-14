@@ -426,7 +426,7 @@ def pass2():
                 errorflag=False
 
 
-f=open('test1.txt')
+f=open('input.txt')
 file=f.readlines()
 for line in file:
     if line!='' and line!='\n' :
