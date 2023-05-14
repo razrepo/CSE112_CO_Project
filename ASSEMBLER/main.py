@@ -100,3 +100,25 @@ def memoryLocation(int_address):
 	return address
 
 
+
+def validLabelVar(name):
+    global error
+    global output
+    global output_error
+    if name in address_table:
+     fr=f"Declaration of {name} already exists. Error on line: {instruction_location}"
+     output=fr+'\n'
+     errorflag=False
+     EXIT()
+    elif name in opcode_table or name == "var":
+        fr=f"Reserved words can't be used as identifiers for vars or labels. Error on line: {instruction_location}"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
+    for j,i in enumerate(name):
+        if not i.isalnum() and not i == "_":
+            fr=f"Invalid identifier used on line: {instruction_location}"
+            output=fr+'\n'
+            errorflag=False
+            EXIT()
+    return True
