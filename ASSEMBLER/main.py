@@ -115,6 +115,11 @@ def validLabelVar(name):
         output=fr+'\n'
         errorflag=False
         EXIT()
+    elif name.isdecimal():
+        fr=f"Identifiers can't be purely numeric. Error on line: {instruction_location}"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
     for j,i in enumerate(name):
         if not i.isalnum() and not i == "_":
             fr=f"Invalid identifier used on line: {instruction_location}"
