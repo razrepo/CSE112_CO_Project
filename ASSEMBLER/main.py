@@ -301,6 +301,7 @@ def buildMovBinary(operands):
 	
 	return binary_instruction
 
+
 def buildBinary(operands):
 	
 	instruction_type = opcode_table[operands[0]][1]
