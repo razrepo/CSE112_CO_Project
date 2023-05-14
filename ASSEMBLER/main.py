@@ -235,6 +235,39 @@ def pass1():
         else:
             break
         noOfInstructions = noOfInstructions + 1
+
+	
+# validates mov instruction of both types B & C
+def checkMov(instruction):
+    global output
+    global output_error
+    global errorflag
+    leni=len(instruction)
+    if leni != 3:
+        fr=f"Wrong instruction syntax on line: {instruction_location}"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
+
+    if validRegister(instruction[1], False)==False:
+        fr=f"Invalid register on line: {instruction_location}"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
+
+    validSecondOperand = False
+    if validRegister(instruction[2], True):
+        validSecondOperand = True
+    elif validImmediate(instruction[2]):
+        validSecondOperand = True
+
+    if validSecondOperand==False:
+        fr=f"No immediate or register in the second operand of mov instruction on line: {instruction_location}"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
+
+	
 	
 
 def buildBinary(operands):
