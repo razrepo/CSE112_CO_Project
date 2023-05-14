@@ -138,7 +138,6 @@ def pass1():
     instruction_location = 0
     isValidVar = True
     noOfInstructions = 0
-
     for i,line in enumerate(program):
         instruction_location = instruction_location + 1
         operands = line.split()
@@ -170,3 +169,30 @@ def pass1():
                 if validLabelVar(operands[0][0:-1])==True:
                     address_table[operands[0][0:-1]] = (memoryLocation(noOfInstructions), False)
             noOfInstructions = noOfInstructions + 1
+      hlt_operand = program[last_valid_instruction_count - 1].split()
+    hltlen=len(hlt_operand)
+    if hltlen != 1 and hltlen != 2:
+        fr=f"No hlt statement at end of program"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
+    if hltlen == 1:
+        if hlt_operand[0] != "hlt":
+            fr=f"No hlt statement at end of program"
+            output=fr+'\n'
+            errorflag=False
+            EXIT()
+    elif hlt_operand[0][-1] == ":" and hlt_operand[0][0:-1] in address_table:
+        if hlt_operand[1] != "hlt":
+            fr="No hlt statement at end of program"
+            output=fr+'\n'
+            errorflag=False
+            EXIT()
+    else: 
+        fr="No hlt statement at end of program"
+        output=fr+'\n'
+        errorflag=False
+        EXIT()
+
+    instruction_location = 0
+    i=0
