@@ -174,7 +174,7 @@ def pass1():
                 if validLabelVar(operands[0][0:-1])==True:
                     address_table[operands[0][0:-1]] = (memoryLocation(noOfInstructions), False)
             noOfInstructions = noOfInstructions + 1
-      hlt_operand = program[last_valid_instruction_count - 1].split()
+    hlt_operand = program[last_valid_instruction_count - 1].split()
     hltlen=len(hlt_operand)
     if hltlen != 1 and hltlen != 2:
         fr=f"No hlt statement at end of program"
@@ -300,7 +300,6 @@ def buildMovBinary(operands):
 		binary_instruction = binary_instruction + immediate
 	
 	return binary_instruction
-	
 
 def buildBinary(operands):
 	
