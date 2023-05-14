@@ -222,6 +222,20 @@ def pass1():
     # storing var address 
 
     instruction_location = 0 
+    for i,line in enumerate(program): 
+        instruction_location = instruction_location + 1
+        operands = line.split()
+        lenop=len(operands)
+        if lenop == 0:
+            continue
+        op0=operands[0]
+        if op0 == "var":
+            if validLabelVar(operands[1]):
+                address_table[operands[1]] = (memoryLocation(noOfInstructions), True)
+        else:
+            break
+        noOfInstructions = noOfInstructions + 1
+	
 
 def buildBinary(operands):
 	
