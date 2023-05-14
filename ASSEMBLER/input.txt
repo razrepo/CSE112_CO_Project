@@ -1,0 +1,20 @@
+var xye
+var xys
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+jmp lab1
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+lab1: sub R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+add R0 R1 R2
+lab2: mul R0 R1 R2
+jmp lab2
+hlt
