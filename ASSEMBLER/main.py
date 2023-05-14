@@ -196,3 +196,29 @@ def pass1():
 
     instruction_location = 0
     i=0
+    while(i<last_valid_instruction_count-1):
+        instruction_location = instruction_location + 1
+        line = program[i].split()
+        lenline=len(line)
+        if lenline == 0:
+            continue
+
+        if lenline == 1:
+            if line[0] == "hlt":
+                fr=f"Invalid declaration of hlt on line {instruction_location}"
+                output=fr+'\n'
+                errorflag=False
+                EXIT()
+        if lenline == 2: 
+            if line[0][-1] == ":" and line[0][0:-1] in address_table:
+                if line[1] == "hlt":
+                    fr=f"Invalid declaration of hlt on line {instruction_location}"
+                    output=fr+'\n'
+                    errorflag=False
+                    EXIT()
+        i+=1
+
+
+    # storing var address 
+
+    instruction_location = 0 
