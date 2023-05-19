@@ -55,10 +55,15 @@ output_error = ""
 errorflag = True
 
 
+# def EXIT():
+#     f = open("error.txt", "w")
+#     f.write(output)
+#     f.close()
+#     exit()
+
+
 def EXIT():
-    f = open("error.txt", "w")
-    f.write(output)
-    f.close()
+    print(output)
     exit()
 
 
@@ -290,10 +295,12 @@ def buildMovBinary(operands):
         binary_instruction = binary_instruction + opcode_table["mov"][1][0]
         binary_instruction = binary_instruction + 5 * "0"
     else:
-        binary_instruction = binary_instruction + opcode_table["mov"][0][0]
+        binary_instruction = binary_instruction + opcode_table["mov"][0][0] + "0"
 
     # 1st register
     binary_instruction = binary_instruction + registers[operands[1]]
+    # print(binary_instruction)
+    # print(binary_instruction)
 
     if validRegister(operands[2], True) == True:
         binary_instruction = binary_instruction + registers[operands[2]]
@@ -301,8 +308,8 @@ def buildMovBinary(operands):
         immediate = int(operands[2][1:])
         immediate = bin(immediate)[2:]
         lenimm = len(immediate)
-        if lenimm < 8:
-            no_of_zeroes = 8 - lenimm
+        if lenimm < 7:
+            no_of_zeroes = 7 - lenimm
             immediate = no_of_zeroes * "0" + immediate
         binary_instruction = binary_instruction + immediate
 
@@ -317,7 +324,6 @@ def buildBinary(operands):
         return binary_instruction
     # opcode
     binary_instruction = binary_instruction + opcode_table[operands[0]][0]
-
     # unused bits
     binary_instruction = binary_instruction + type_table[instruction_type][1] * "0"
 
@@ -329,7 +335,7 @@ def buildBinary(operands):
         if checkvar == "reg":
             binary_instruction = binary_instruction + registers[operands[1 + i]]
         elif checkvar == "imm":
-            immediate = int(operands[i + 1][1:])
+            immediate = str(operands[i + 1][1:])
             immediate = bin(immediate)[2:]
             lenimm = len(immediate)
             if lenimm < 8:
@@ -435,16 +441,35 @@ def pass2():
                 errorflag = False
 
 
-f = open("input.txt")
-file = f.readlines()
-for line in file:
-    if line != "" and line != "\n":
-        line.rstrip("\n")
-        program.append(line)
-pass1()
-pass2()
-for line in bin_program:
-    output_error += line + "\n"
-f = open("output.txt", "w")
-f.write(output_error)
-f.close()
+# f = open("C:\\Users\\User\\Desktop\\clone\\ASSEMBLER\\input.txt")
+# file = f.readlines()
+# for line in file:
+#     if line != "" and line != "\n":
+#         line.rstrip("\n")
+#         program.append(line)
+# pass1()
+# pass2()
+# for line in bin_program:
+#     output_error += line + "\n"
+# f = open("output.txt", "w")
+# f.write(output_error)
+# f.close()
+
+# reads input
+def loadProgram():
+	global program
+	for line in sys.stdin:
+		program.append(line)
+
+
+def main():
+	loadProgram()
+
+	pass1()
+	pass2()
+
+	for line in bin_program:
+		print(line, end = "\n")
+
+
+main()
