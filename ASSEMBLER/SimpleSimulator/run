@@ -1,3 +1,4 @@
 #!/bin/bash
 
-python3 Simulator.py
+# Add command to run your program here
+python3 main.py
